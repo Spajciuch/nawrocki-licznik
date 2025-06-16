@@ -1,0 +1,185 @@
+/* Tło i układ */
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #070707;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    font-family: sans-serif;
+    color: #eee;
+    overflow: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Układ główny */
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    max-width: 90vw;
+    width: 800px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Światło reflektora */
+.spotlight {
+    position: absolute;
+    top: -30px;
+    width: 440px;
+    height: 550px;
+    background: white;
+    opacity: 1;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    transition: left 0.3s ease, top 0.3s ease;
+}
+
+.fill-wrapper {
+    position: relative;
+    width: 280px;
+    height: 500px;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+.fill-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('Nawrocki.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 1;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+    z-index: 1;
+}
+
+/* Maska z cieczą */
+.mask-layer {
+    position: absolute;
+    inset: 0;
+    mask-image: url('Nawrocki.png');
+    -webkit-mask-image: url('Nawrocki.png');
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-position: center;
+    overflow: auto;
+    z-index: 3;
+}
+
+@keyframes wave {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: 1000px;
+  }
+}
+
+@keyframes rise {
+  from { height: 0%; }
+  to { height: calc(var(--percent) * 1%); }
+}
+
+.liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: calc(var(--percent) * 1%);
+  background: linear-gradient(
+    to top,
+    #b30000 0%,
+    #ff1a1a 20%,
+    #ff4d4d 50%,
+    #ff1a1a 80%,
+    #b30000 94%,
+    transparent 95%
+  );
+  
+  animation: rise 0.8s ease-in-out;
+  transition: height 0.8s ease-in-out;
+  filter: 
+    drop-shadow(0 0 8px #e60000)
+    drop-shadow(0 0 15px rgba(230, 0, 0, 0.6));
+  z-index: 4;
+  overflow: hidden; /* <-- to ukrywa wystającą falę */
+  pointer-events: none;
+}
+
+.liquid::before {
+  content: '';
+  position: absolute;
+  bottom: 100%; /* <-- umieszczone tuż nad powierzchnią cieczy */
+  left: 0;
+  width: 200%;
+  height: 30px;
+
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'><path fill='rgba(255,255,255,0.1)' d='M0,10 C20,15 40,5 60,10 S100,5 100,10 L100,20 L0,20 Z'/></svg>")
+    repeat-x;
+
+  background-size: 100px 30px;
+  transform: translateY(15px); /* przesunięcie fali w dół */
+  animation: wave 16s linear infinite; /* wolniejsza fala */
+  z-index: 5;
+}
+
+
+
+.label {
+    margin-top: -50vh;
+    font-size: 1.5rem;
+    max-width: 400px;
+    text-align: left;
+    user-select: none;
+    z-index: 5;
+}
+
+/* Responsywność */
+@media (max-width: 600px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        /* Ustawienie elementów pionowo */
+        align-items: center;
+    }
+
+    .counter {
+        order: -1;
+        /* Przeniesienie nad tekst "Kadencja Prezydenta" */
+    }
+
+    .label {
+        font-size: 1.1rem;
+        text-align: center;
+        margin-top: 20px;
+        order: 2;
+        /* Kadencja Prezydenta pozostaje poniżej licznika */
+    }
+
+    .label {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .fill-wrapper {
+        width: 60vw;
+        height: auto;
+        aspect-ratio: 1 / 2;
+    }
+
+    .spotlight {
+        width: 90vw;
+        height: 550px;
+    }
+}

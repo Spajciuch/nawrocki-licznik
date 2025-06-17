@@ -27,12 +27,11 @@ async function initCounter() {
         const response = await fetch('/api/kadencja');
         const data = await response.json();
 
-        // Zapisz dane do zmiennych globalnych
+
         endDateGlobal = new Date(data.endDate);
         daysInTermGlobal = data.daysInTerm;
-        startDateGlobal = new Date(data.startDate);  // Zakładając, że serwer zwraca startDate
+        startDateGlobal = new Date(data.startDate);  
 
-        // Uruchom licznik
         updateCounter();
     } catch (error) {
         console.error('Błąd podczas pobierania danych:', error);
@@ -45,10 +44,8 @@ function updateCounter() {
     const now = new Date();
     now.setHours(now.getHours() + 2); // UTC+2
 
-    // Oblicz pozostały czas
     const diff = endDateGlobal.getTime() - now.getTime();
 
-    // Oblicz jednostki czasu
     const msInSecond = 1000;
     const msInMinute = msInSecond * 60;
     const msInHour = msInMinute * 60;
@@ -59,12 +56,11 @@ function updateCounter() {
     const minutes = Math.floor((diff % msInHour) / msInMinute);
     const seconds = Math.floor((diff % msInMinute) / msInSecond);
 
-    // Oblicz procent ukończenia
     const totalDuration = daysInTermGlobal * msInDay;
     const elapsed = now.getTime() - startDateGlobal.getTime();
     let percentage = Math.min(100, (elapsed / totalDuration) * 100);
     if (percentage < 0) percentage = 0;
-    // Aktualizuj UI
+
     document.getElementById('countdown').textContent =
         `Zostało: ${days} dni ${(hours.toString().padStart(2, '0'))}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
 
@@ -79,8 +75,6 @@ function updateCounter() {
     );
 }
 
-// Inicjalizacja
 initCounter();
 
-// Uruchom aktualizację co sekundę
 setInterval(updateCounter, 1000);

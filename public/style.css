@@ -1,4 +1,4 @@
-/* Tło i układ */
+
 body {
     margin: 0;
     height: 100vh;
@@ -13,7 +13,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Układ główny */
+
 .container {
     display: flex;
     flex-direction: row;
@@ -25,7 +25,7 @@ body {
     z-index: 1;
 }
 
-/* Światło reflektora */
+
 .spotlight {
     position: absolute;
     top: -30px;
@@ -61,7 +61,7 @@ body {
     z-index: 1;
 }
 
-/* Maska z cieczą */
+
 .mask-layer {
     position: absolute;
     inset: 0;
@@ -113,14 +113,14 @@ body {
     drop-shadow(0 0 8px #e60000)
     drop-shadow(0 0 15px rgba(230, 0, 0, 0.6));
   z-index: 4;
-  overflow: hidden; /* <-- to ukrywa wystającą falę */
+  overflow: hidden; 
   pointer-events: none;
 }
 
 .liquid::before {
   content: '';
   position: absolute;
-  bottom: 100%; /* <-- umieszczone tuż nad powierzchnią cieczy */
+  bottom: 100%; 
   left: 0;
   width: 200%;
   height: 30px;
@@ -129,8 +129,8 @@ body {
     repeat-x;
 
   background-size: 100px 30px;
-  transform: translateY(15px); /* przesunięcie fali w dół */
-  animation: wave 16s linear infinite; /* wolniejsza fala */
+  transform: translateY(15px); 
+  animation: wave 16s linear infinite;
   z-index: 5;
 }
 
@@ -145,18 +145,18 @@ body {
     z-index: 5;
 }
 
-/* Responsywność */
+
 @media (max-width: 600px) {
     .container {
         display: flex;
         flex-direction: column;
-        /* Ustawienie elementów pionowo */
+
         align-items: center;
     }
 
     .counter {
         order: -1;
-        /* Przeniesienie nad tekst "Kadencja Prezydenta" */
+
     }
 
     .label {
@@ -164,7 +164,7 @@ body {
         text-align: center;
         margin-top: 20px;
         order: 2;
-        /* Kadencja Prezydenta pozostaje poniżej licznika */
+
     }
 
     .label {
